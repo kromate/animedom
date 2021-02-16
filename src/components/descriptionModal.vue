@@ -1,20 +1,22 @@
-pr<template>
-  <div :class="[modal ? 'is-active' : '', 'modal']">
-    <div class="modal-background"></div>
-    <div class="modal-card">
-      <header class="modal-card-head">
-        <p class="modal-card-title">Modal title</p>
-        <button class="delete" aria-label="close"></button>
-      </header>
-      <section class="modal-card-body">
-        <!-- Content ... -->
-      </section>
-      <footer class="modal-card-foot">
-        <button class="button is-success">Save changes</button>
-        <button class="button" @click="close">Cancel</button>
-      </footer>
+<template>
+  <transition name="slide" appear>
+    <div :class="[modal ? 'is-active' : '', 'modal']">
+      <div class="modal-background"></div>
+      <div class="modal-card">
+        <header class="modal-card-head">
+          <p class="modal-card-title">Modal title</p>
+          <button class="delete" aria-label="close"></button>
+        </header>
+        <section class="modal-card-body">
+          <!-- Content ... -->
+        </section>
+        <footer class="modal-card-foot">
+          <button class="button is-success">Save changes</button>
+          <button class="button" @click="close">Cancel</button>
+        </footer>
+      </div>
     </div>
-  </div>
+  </transition>
 </template>
 
 <script>
@@ -38,6 +40,10 @@ export default {
   },
 
   methods: {
+    close() {
+      console.log("object");
+      this.$emit("close");
+    },
     getDetails() {
       this.data = {};
       console.log(
@@ -65,4 +71,13 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.slide-enter-active,
+.slide-leave-active {
+  transition: transform 0.5s;
+}
+.slide-enter-from,
+.slide-leave-to {
+  transform: scale(0);
+}
+</style>

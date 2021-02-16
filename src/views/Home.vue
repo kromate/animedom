@@ -25,17 +25,19 @@
         </div>
       </div>
     </div>
-    <DescriptionModal />
+    <DescriptionModal :showModal="showModal" :link="link" @close="showModal = !showModal" />
   </div>
 </template>
 
 <script>
-import descriptionModal from "@/components/descriptionModal.vue";
+import DescriptionModal from "@/components/descriptionModal.vue";
 export default {
-  components: { descriptionModal },
+  components: { DescriptionModal },
   name: "Home",
   data() {
     return {
+      link: "",
+      showModal: true,
       loading: false,
       searchValue: "",
       searchResult: [],
