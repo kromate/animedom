@@ -25,11 +25,14 @@
         </div>
       </div>
     </div>
+    <DescriptionModal />
   </div>
 </template>
 
 <script>
+import descriptionModal from "@/components/descriptionModal.vue";
 export default {
+  components: { descriptionModal },
   name: "Home",
   data() {
     return {
