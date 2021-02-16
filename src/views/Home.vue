@@ -25,7 +25,7 @@
         </div>
       </div>
     </div>
-    <DescriptionModal :showModal="showModal" :link="link" @close="showModal = !showModal" />
+    <DescriptionModal :showModal="showModal" :link="link" @close="showModal = false" />
   </div>
 </template>
 

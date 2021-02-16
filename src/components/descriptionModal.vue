@@ -1,11 +1,13 @@
 <template>
   <transition name="slide" appear>
-    <div :class="[modal ? 'is-active' : '', 'modal']">
+    <progress class="progress is-uni " max="70" v-if="!data.id && modal">1110%</progress>
+
+    <div :class="[modal ? 'is-active' : '', 'modal']" v-else>
       <div class="modal-background"></div>
       <div class="modal-card">
         <header class="modal-card-head">
-          <p class="modal-card-title">Modal title</p>
-          <button class="delete" aria-label="close"></button>
+          <p class="modal-card-title">{{ data.name }}</p>
+          <button class="delete" aria-label="close" @click="close"></button>
         </header>
         <section class="modal-card-body">
           {{ data.summary }}
@@ -41,7 +43,7 @@ export default {
 
   methods: {
     close() {
-      console.log("object");
+      this.data = {};
       this.$emit("close");
     },
     getDetails() {
@@ -65,6 +67,15 @@ export default {
 </script>
 
 <style>
+progress {
+  width: 50%;
+  margin: 0px auto;
+}
+.is-uni {
+  background: rgb(20, 117, 85);
+  border: transparent;
+  color: white;
+}
 .slide-enter-active,
 .slide-leave-active {
   transition: transform 0.5s;
