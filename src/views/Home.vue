@@ -32,6 +32,8 @@ export default {
     search() {
       let value = encodeURIComponent(this.searchValue);
       console.log(value);
+      // https://anime-web-scraper.herokuapp.com/search/?name=haikyu
+      fetch();
     },
   },
 };
