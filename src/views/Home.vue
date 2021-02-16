@@ -37,7 +37,7 @@ export default {
   data() {
     return {
       link: "",
-      showModal: true,
+      showModal: false,
       loading: false,
       searchValue: "",
       searchResult: [],
@@ -46,7 +46,8 @@ export default {
 
   methods: {
     direct(link) {
-      console.log(link);
+      this.link = link;
+      this.showModal = true;
     },
     search() {
       this.loading = true;
