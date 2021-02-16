@@ -8,7 +8,7 @@
           <button class="delete" aria-label="close"></button>
         </header>
         <section class="modal-card-body">
-          <!-- Content ... -->
+          {{ data.summary }}
         </section>
         <footer class="modal-card-foot">
           <button class="button is-success">Save changes</button>
@@ -46,14 +46,7 @@ export default {
     },
     getDetails() {
       this.data = {};
-      console.log(
-        `https://us-central1-kromtech-archive.cloudfunctions.net/GetDownloadLink/?link=${this.link}`,
-      );
-      fetch(
-        encodeURI(`https://us-central1-kromtech-archive.cloudfunctions.net/YT/?link=${this.link}`, {
-          mode: "no-cors",
-        }),
-      )
+      fetch(`https://anime-web-scraper.herokuapp.com/desc/?link=${this.link}`)
         .then((response) => response.json())
         .then((data) => {
           console.log(data);
