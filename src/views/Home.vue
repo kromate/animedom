@@ -1,22 +1,17 @@
 <template>
   <div class="is-flex conf">
     <div class="is-flex w-50">
-      <input class="input" type="text" placeholder="Name of the Anime" />
-      <button class="button is-uni">Search</button>
+      <input class="input" type="text" placeholder="Name of the Anime" v-model="searchValue" />
+      <button class="button is-uni" @click="search">Search</button>
     </div>
 
-    <div class="mx-4">
-      <progress class="progress is-uni" max="100">30%</progress>
-      <div class="card">
+    <div class="mx-4 ">
+      <progress class="progress is-uni " max="70" v-if="loading">10%</progress>
+      <div class="card p-1 " v-else>
         <header class="card-header">
-          <p class="card-header-title">
-            Card header
+          <p class="card-header-title ">
+            Naruto
           </p>
-          <button class="card-header-icon" aria-label="more options">
-            <span class="icon">
-              <i class="fas fa-angle-down" aria-hidden="true"></i>
-            </span>
-          </button>
         </header>
       </div>
     </div>
@@ -26,10 +21,25 @@
 <script>
 export default {
   name: "Home",
+  data() {
+    return {
+      loading: false,
+      searchValue: "",
+    };
+  },
 };
 </script>
 
 <style scoped>
+p {
+  text-align: center !important;
+  justify-content: center;
+  font-size: 1.2rem;
+}
+progress {
+  width: 50%;
+  margin: 0px auto;
+}
 .is-uni {
   background: rgb(20, 117, 85);
   border: transparent;
