@@ -66,6 +66,10 @@ export default {
 </script>
 
 <style scoped>
+.card {
+  background: #daefd6;
+  cursor: pointer;
+}
 p {
   text-align: center !important;
   justify-content: center;
