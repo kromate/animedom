@@ -7,12 +7,22 @@
 
     <div class="mx-4 ">
       <progress class="progress is-uni " max="70" v-if="loading">10%</progress>
-      <div class="card p-1 " v-else>
-        <header class="card-header">
-          <p class="card-header-title ">
-            Naruto
-          </p>
-        </header>
+      <div v-else-if="searchResult.length">
+        <div
+          class="card p-1 m-1"
+          v-for="(n, index) in searchResult"
+          :key="index"
+          @click="direct(n.link)"
+        >
+          <header class="card-header ">
+            <p class="card-header-title ">
+              {{ n.name }}
+              <br />
+              {{ n.release }}
+            </p>
+            <br />
+          </header>
+        </div>
       </div>
     </div>
   </div>
@@ -25,15 +35,31 @@ export default {
     return {
       loading: false,
       searchValue: "",
+      searchResult: [],
     };
   },
 
   methods: {
+    direct(link) {
+      console.log(link);
+    },
     search() {
+      this.loading = true;
       let value = encodeURIComponent(this.searchValue);
       console.log(value);
       // https://anime-web-scraper.herokuapp.com/search/?name=haikyu
-      fetch();
+      fetch(`https://anime-web-scraper.herokuapp.com/search/?name=${value}`)
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+          this.searchResult = data;
+          this.loading = false;
+        })
+        .catch((err) => {
+          console.log(err);
+          alert("something went wrong");
+          this.loading = false;
+        });
     },
   },
 };
