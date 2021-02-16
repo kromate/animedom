@@ -27,6 +27,13 @@ export default {
       searchValue: "",
     };
   },
+
+  methods: {
+    search() {
+      let value = encodeURIComponent(this.searchValue);
+      console.log(value);
+    },
+  },
 };
 </script>
 
