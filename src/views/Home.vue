@@ -113,9 +113,10 @@ input {
 .w-50 {
   max-width: 90vw;
   margin: 0px auto;
-  justify-content: space-between;
+  justify-content: center;
   margin-top: 1rem;
   margin-bottom: 1rem;
   flex-wrap: wrap;
+  align-items: center;
 }
 </style>
