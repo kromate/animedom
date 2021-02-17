@@ -2,26 +2,15 @@
   <div class="is-flex conf">
     <div class="is-flex w-50">
       <input class="input" type="text" placeholder="Name of the Anime" v-model="searchValue" />
-      <button class="button is-uni" @click="search">Search</button>
+      <button class="button" @click="search">Search</button>
     </div>
 
-    <div class="mx-4 ">
-      <progress class="progress is-uni " max="70" v-if="loading">10%</progress>
+    <div>
+      <progress class="progress" max="70" value="20" v-if="loading">10%</progress>
       <div v-else-if="searchResult.length">
-        <div
-          class="card p-1 m-1"
-          v-for="(n, index) in searchResult"
-          :key="index"
-          @click="direct(n.link)"
-        >
-          <header class="card-header ">
-            <p class="card-header-title ">
-              {{ n.name }}
-              <br />
-              {{ n.release }}
-            </p>
-            <br />
-          </header>
+        <div class="card " v-for="(n, index) in searchResult" :key="index" @click="direct(n.link)">
+          <span class="name">{{ n.name }}</span>
+          <span> {{ n.release }}</span>
         </div>
       </div>
     </div>
@@ -72,9 +61,23 @@ export default {
 </script>
 
 <style scoped>
+.name {
+  flex: 70%;
+  margin-right: 5px;
+}
 .card {
   background: #daefd6;
   cursor: pointer;
+  width: 300px;
+  min-height: 60px;
+  height: auto;
+  display: flex;
+  flex-basis: 100%;
+  font-size: 1.2rem;
+  justify-content: center;
+  align-items: center;
+  /* text-align: center; */
+  padding: 2px 6px;
 }
 p {
   text-align: center !important;
@@ -90,19 +93,26 @@ progress {
   border: transparent;
   color: white;
 }
-.is-uni:hover {
-  background: rgb(20, 117, 85);
-  border: transparent;
-  color: white;
-}
+
 .conf {
   flex-direction: column;
   justify-content: center;
   flex-wrap: wrap;
+  align-items: center;
 }
 button {
   margin: 7px;
   width: 100px;
+  background: rgb(20, 117, 85);
+  border: transparent;
+  color: white;
+  font-size: 0.9rem;
+}
+
+button:hover {
+  background: rgb(20, 117, 85);
+  border: transparent;
+  color: white;
 }
 input {
   width: 290px;

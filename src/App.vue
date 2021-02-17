@@ -22,7 +22,12 @@ input {
   color: rgb(74, 81, 101);
   border: none;
   outline: none;
-  box-shadow: 1px 4px 3px black;
+  box-shadow: 1px 1px 2px 2px #7d7f88;
+  height: 20px;
+  background: #f3f1f1;
+  font-size: 1rem;
+  font-weight: 600;
+  color: black;
 }
 
 button {
@@ -30,5 +35,7 @@ button {
   border-radius: 3px;
   border: none;
   outline: none;
+  box-shadow: 1px 1px 2px 2px #1c5a2b99;
+  width: 100px;
 }
 </style>
