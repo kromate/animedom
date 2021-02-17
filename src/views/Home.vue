@@ -6,6 +6,7 @@
     </div>
 
     <div>
+      <Loader />
       <progress class="progress" max="70" value="20" v-if="loading">10%</progress>
       <div v-else-if="searchResult.length">
         <div class="card " v-for="(n, index) in searchResult" :key="index" @click="direct(n.link)">
@@ -20,8 +21,9 @@
 
 <script>
 import DescriptionModal from "@/components/descriptionModal.vue";
+import Loader from "@/components/Loader.vue";
 export default {
-  components: { DescriptionModal },
+  components: { DescriptionModal, Loader },
   name: "Home",
   data() {
     return {
