@@ -116,5 +116,6 @@ input {
   justify-content: space-between;
   margin-top: 1rem;
   margin-bottom: 1rem;
+  flex-wrap: wrap;
 }
 </style>
