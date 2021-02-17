@@ -106,6 +106,7 @@ button {
 }
 input {
   width: 290px;
+  max-width: 85vw;
   border: 1px solid rgb(65, 88, 24);
   margin: 7px;
 }
