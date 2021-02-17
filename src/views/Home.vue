@@ -6,8 +6,7 @@
     </div>
 
     <div>
-      <Loader />
-      <progress class="progress" max="70" value="20" v-if="loading">10%</progress>
+      <Loader v-if="loading" />
       <div v-else-if="searchResult.length">
         <div class="card " v-for="(n, index) in searchResult" :key="index" @click="direct(n.link)">
           <span class="name">{{ n.name }}</span>
@@ -68,6 +67,7 @@ export default {
   margin-right: 5px;
 }
 .card {
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
   background: #daefd6;
   cursor: pointer;
   width: 300px;
@@ -80,6 +80,7 @@ export default {
   align-items: center;
   /* text-align: center; */
   padding: 2px 6px;
+  margin: 5px 4px;
 }
 p {
   text-align: center !important;
