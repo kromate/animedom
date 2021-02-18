@@ -78,9 +78,9 @@ export default {
   font-size: 1.2rem;
   justify-content: center;
   align-items: center;
-  /* text-align: center; */
   padding: 2px 6px;
-  margin: 5px 4px;
+  margin: 12px 4px;
+  border-radius: 4px;
 }
 p {
   text-align: center !important;
