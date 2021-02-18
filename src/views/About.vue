@@ -42,13 +42,9 @@
 </template>
 
 <script>
-import CardImg from "@/components/details/cardImg.vue";
-import firebase from "firebase/app";
-import "firebase/firestore";
-import "firebase/storage";
-import Loader from "@/components/imgLoader.vue";
+import Loader from "@/components/Loader.vue";
 export default {
-  components: { Loader, CardImg },
+  components: { Loader },
   name: "Details",
   data() {
     return {
@@ -58,119 +54,11 @@ export default {
       disableDecre: false,
     };
   },
-  computed: {
-    complete() {
-      return this.$store.state.detailedItem;
-    },
-    name() {
-      return this.$store.state.detailedItem.name;
-    },
-    details() {
-      return this.$store.state.detailedItem.details;
-    },
-    Price() {
-      return this.$store.state.detailedItem.price;
-    },
-    unit() {
-      return this.$store.state.detailedItem.count;
-    },
-  },
+  computed: {},
 
-  methods: {
-    setCount() {
-      if (this.unit) {
-        this.count = this.unit;
-      } else {
-        this.count = 1;
-      }
-    },
-    decre() {
-      if (this.count > 1) {
-        this.count--;
-      } else {
-        this.disableDecre = true;
-      }
-    },
-    incre() {
-      if (this.disableDecre) {
-        this.disableDecre = false;
-      }
-      this.count++;
-    },
-    cart(data) {
-      this.removeCart(this.complete);
-      let upd = data;
-      upd.count = this.count;
-      let item = upd;
-      console.log(item);
-      this.item = item;
-      console.log(this.complete);
-    },
-    removeCart(data) {
-      console.log(data);
-      const collection = firebase.firestore().collection("users");
-      collection
-        .doc(this.$store.state.user.uid)
-        .update({
-          cart: firebase.firestore.FieldValue.arrayRemove(data),
-        })
-        .then(() => {
-          this.$store.commit("updatedetailedItem", this.item);
-          this.$store.dispatch("addToCart");
-        })
-        .catch((err) => {
-          this.$store.commit("wrong");
-          console.log(err);
-        });
-    },
-    getfromId() {
-      firebase
-        .firestore()
-        .collection("collection")
-        .doc(this.$route.query.id)
-
-        .get()
-        .then((doc) => {
-          if (doc.exists) {
-            const storageReference = firebase.storage().ref();
-            const document = doc.data();
-            console.log("Document data:", doc.data());
-            storageReference
-              .child("collection/" + `${document.id}`)
-              .getDownloadURL()
-              .then((url) => {
-                const content = {
-                  img: url,
-                  name: document.name,
-                  cat: document.categories,
-                  details: document.details,
-                  id: document.id,
-                  price: document.Price,
-                };
-                console.log(content);
-                this.$store.commit("updatedetailedItem", content);
-                this.setCount();
-              });
-          } else {
-            // doc.data() will be undefined in this case
-            console.log("No such document!");
-            this.empty = true;
-          }
-        })
-        .catch(function(error) {
-          this.$store.commit("Error");
-          console.log("Error getting document:", error);
-        });
-    },
-  },
-
+  methods: {},
   created() {
-    if (this.$route && this.name == null) {
-      console.log(this.$route.query.id);
-      this.getfromId();
-    } else {
-      this.setCount();
-    }
+    this.search();
   },
 };
 </script>
