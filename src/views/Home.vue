@@ -9,6 +9,7 @@
       <Loader v-if="loading" />
       <div v-else-if="searchResult.length">
         <div class="card " v-for="(n, index) in searchResult" :key="index" @click="direct(n.link)">
+          <img :src="n.image" />
           <span class="name">{{ n.name }}</span>
           <span> {{ n.release }}</span>
         </div>
