@@ -1,102 +1,317 @@
 <template>
-  <div class="is-flex conf">
-    <div class="is-flex w-50">
-      <input class="input" type="text" placeholder="Name of the Anime" v-model="searchValue" />
-      <button class="button" @click="search">Search</button>
+  <div class="container" v-if="name">
+    <div class="details">
+      <h1>{{ name }}</h1>
+      <p class="text">
+        {{ details }}
+      </p>
+      <h2>&#8358;{{ Price }}</h2>
+
+      <!-- <div class="size">
+        <p class="sItem">XS</p>
+        <p class="sItem">S</p>
+        <p class="sItem">M</p>
+        <p class="sItem">L</p>
+        <p class="sItem">XL</p>
+      </div> -->
+      <div class="flex unitBtn">
+        <button class="secondaryBtn secBtn" :disabled="disableDecre" @click="decre">-</button>
+        <div class="cartbtn priBtn">{{ count }}</div>
+        <button class="secondaryBtn secBtn" @click="incre">+</button>
+      </div>
+      <button class="primaryBtn cartbtn" @click="cart(complete)">ADD TO CART</button>
     </div>
 
-    <div>
-      <Loader v-if="loading" />
-      <div v-else-if="searchResult.length">
-        <div class="card " v-for="(n, index) in searchResult" :key="index" @click="direct(n.link)">
-          <span class="name">{{ n.name }}</span>
-          <span> {{ n.release }}</span>
-        </div>
-      </div>
+    <div class="detImg">
+      <CardImg />
     </div>
+  </div>
+
+  <div class="container2" v-else>
+    <div v-if="!empty">
+      <Loader w="233.39" h="340" b="8" />
+      <p class="lood">loading....</p>
+    </div>
+
+    <p class="empty" v-else>
+      Item not Found <br />
+      click <router-link class="box" to="/home" style="margin: 1rem;">Here </router-link> to return
+      to home page
+    </p>
   </div>
 </template>
 
 <script>
-import Loader from "@/components/Loader.vue";
+import CardImg from "@/components/details/cardImg.vue";
+import firebase from "firebase/app";
+import "firebase/firestore";
+import "firebase/storage";
+import Loader from "@/components/imgLoader.vue";
 export default {
-  components: { Loader },
-  name: "Home",
-  data() {},
+  components: { Loader, CardImg },
+  name: "Details",
+  data() {
+    return {
+      empty: false,
+      count: 1,
+      item: "",
+      disableDecre: false,
+    };
+  },
+  computed: {
+    complete() {
+      return this.$store.state.detailedItem;
+    },
+    name() {
+      return this.$store.state.detailedItem.name;
+    },
+    details() {
+      return this.$store.state.detailedItem.details;
+    },
+    Price() {
+      return this.$store.state.detailedItem.price;
+    },
+    unit() {
+      return this.$store.state.detailedItem.count;
+    },
+  },
 
-  methods: {},
+  methods: {
+    setCount() {
+      if (this.unit) {
+        this.count = this.unit;
+      } else {
+        this.count = 1;
+      }
+    },
+    decre() {
+      if (this.count > 1) {
+        this.count--;
+      } else {
+        this.disableDecre = true;
+      }
+    },
+    incre() {
+      if (this.disableDecre) {
+        this.disableDecre = false;
+      }
+      this.count++;
+    },
+    cart(data) {
+      this.removeCart(this.complete);
+      let upd = data;
+      upd.count = this.count;
+      let item = upd;
+      console.log(item);
+      this.item = item;
+      console.log(this.complete);
+    },
+    removeCart(data) {
+      console.log(data);
+      const collection = firebase.firestore().collection("users");
+      collection
+        .doc(this.$store.state.user.uid)
+        .update({
+          cart: firebase.firestore.FieldValue.arrayRemove(data),
+        })
+        .then(() => {
+          this.$store.commit("updatedetailedItem", this.item);
+          this.$store.dispatch("addToCart");
+        })
+        .catch((err) => {
+          this.$store.commit("wrong");
+          console.log(err);
+        });
+    },
+    getfromId() {
+      firebase
+        .firestore()
+        .collection("collection")
+        .doc(this.$route.query.id)
+
+        .get()
+        .then((doc) => {
+          if (doc.exists) {
+            const storageReference = firebase.storage().ref();
+            const document = doc.data();
+            console.log("Document data:", doc.data());
+            storageReference
+              .child("collection/" + `${document.id}`)
+              .getDownloadURL()
+              .then((url) => {
+                const content = {
+                  img: url,
+                  name: document.name,
+                  cat: document.categories,
+                  details: document.details,
+                  id: document.id,
+                  price: document.Price,
+                };
+                console.log(content);
+                this.$store.commit("updatedetailedItem", content);
+                this.setCount();
+              });
+          } else {
+            // doc.data() will be undefined in this case
+            console.log("No such document!");
+            this.empty = true;
+          }
+        })
+        .catch(function(error) {
+          this.$store.commit("Error");
+          console.log("Error getting document:", error);
+        });
+    },
+  },
+
+  created() {
+    if (this.$route && this.name == null) {
+      console.log(this.$route.query.id);
+      this.getfromId();
+    } else {
+      this.setCount();
+    }
+  },
 };
 </script>
 
 <style scoped>
-.name {
-  flex: 70%;
-  margin-right: 5px;
-}
-.card {
-  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
-  background: #daefd6;
-  cursor: pointer;
-  width: 300px;
-  min-height: 60px;
-  height: auto;
+.priBtn {
+  margin: 0px 6px;
+  height: 40px;
+  border: 1px solid #f4ae53;
+  flex-basis: 180px;
+  font-size: 2.4rem;
+  font-weight: 900;
   display: flex;
-  flex-basis: 100%;
-  font-size: 1.2rem;
   justify-content: center;
   align-items: center;
-  padding: 2px 6px;
-  margin: 12px 4px;
-  border-radius: 4px;
+  box-shadow: 0px 1px 2px rgb(0, 0, 0), 2px 4px 2px rgba(0, 0, 0, 0.459);
 }
-p {
-  text-align: center !important;
+.secBtn {
+  flex-basis: 60px;
+  margin: 0px 6px;
+  height: 38px;
+  font-size: 2rem;
+  display: flex;
   justify-content: center;
+  align-items: center;
+}
+.unitBtn {
+  margin-top: 10px;
+  margin-left: -6px;
+  width: 100%;
+  max-width: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+a {
+  text-decoration: none;
+  color: #f4ae53;
+}
+.empty {
+  font-size: 2rem;
+  text-align: center;
+  text-shadow: 0px 1px 4px rgba(0, 0, 0, 0.315), 0px 4px 2px rgba(0, 0, 0, 0.541);
+  font-weight: 900;
+  text-decoration: none;
+  width: 260px;
+  vertical-align: 20px;
+  margin-top: 2rem;
+}
+.lood {
   font-size: 1.2rem;
+  text-align: center;
+  font-weight: 600;
+  color: #d79947;
 }
-progress {
-  width: 50%;
-  margin: 0px auto;
+.text {
+  margin-left: 1rem;
+  text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.315), 0px 2px 1px rgba(0, 0, 0, 0.541);
+  font-size: 1.3rem;
 }
-.is-uni {
-  background: rgb(20, 117, 85);
-  border: transparent;
-  color: white;
+.cartbtn {
+  max-width: 180px;
+}
+.sItem {
+  margin: 0px 4px;
+  border: 1px solid #d79947;
+  padding: 3px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 20px;
+  height: 20px;
+  font-weight: 400;
+  color: #d79947;
+}
+.size {
+  display: flex;
+  margin-top: 2rem;
+}
+h2 {
+  margin-top: 0.8rem;
+  font-size: 2.5rem;
+  text-shadow: 0px 1px 4px rgba(0, 0, 0, 0.315), 0px 4px 2px rgba(0, 0, 0, 0.541);
+}
+h1 {
+  text-shadow: 0px 1px 4px rgba(0, 0, 0, 0.315), 0px 4px 2px rgba(0, 0, 0, 0.541);
+  font-size: 4rem;
+  margin-left: 1rem;
+  margin-top: 6rem;
 }
 
-.conf {
-  flex-direction: column;
+.container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1.5rem;
+  color: #d79947;
+}
+.container2 {
+  display: flex;
   justify-content: center;
-  flex-wrap: wrap;
-  align-items: center;
+  margin-top: 1.5rem;
 }
-button {
-  margin: 7px;
-  width: 100px;
-  background: rgb(20, 117, 85);
-  border: transparent;
-  color: white;
-  font-size: 0.9rem;
+.details {
+  flex-basis: 45%;
+  margin: 12px;
+  margin-left: 40px;
+  max-width: 400px;
 }
-
-button:hover {
-  background: rgb(20, 117, 85);
-  border: transparent;
-  color: white;
+.detImg {
+  flex-basis: 55%;
+  display: flex;
+  align-items: flex-end;
 }
-input {
-  width: 290px;
-  max-width: 85vw;
-  border: 1px solid rgb(65, 88, 24);
-  margin: 7px;
-}
-.w-50 {
-  max-width: 90vw;
-  margin: 0px auto;
-  justify-content: center;
-  margin-top: 1rem;
-  margin-bottom: 1rem;
-  flex-wrap: wrap;
-  align-items: center;
+@media (max-width: 800px) {
+  .detImg {
+    order: 1;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .details {
+    order: 2;
+    text-align: center;
+    margin: 0px;
+    margin-left: 0px;
+    max-width: 400px;
+    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: -65px;
+    max-width: 100%;
+  }
+  .text {
+    margin-left: 0px;
+  }
+  .container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1.5rem;
+    flex-direction: column;
+  }
 }
 </style>

@@ -31,8 +31,12 @@ export default {
       showModal: false,
       loading: false,
       searchValue: "",
-      searchResult: [],
     };
+  },
+  computed: {
+    searchResult() {
+      return this.$store.state.searchArray;
+    },
   },
 
   methods: {
@@ -43,13 +47,12 @@ export default {
     search() {
       this.loading = true;
       let value = encodeURIComponent(this.searchValue);
-      console.log(value);
       // https://anime-web-scraper.herokuapp.com/search/?name=haikyu
       fetch(`https://anime-web-scraper.herokuapp.com/search/?name=${value}`)
         .then((response) => response.json())
         .then((data) => {
           console.log(data);
-          this.searchResult = data;
+          this.$store.commit("addsearchedRes", data);
           this.loading = false;
         })
         .catch((err) => {
