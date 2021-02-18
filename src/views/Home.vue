@@ -9,7 +9,7 @@
       <Loader v-if="loading" />
       <div v-else-if="searchResult.length">
         <div class="card " v-for="(n, index) in searchResult" :key="index" @click="direct(n.link)">
-          <img :src="n.image" />
+          <img :src="n.image" class="res-img" />
           <span class="name">{{ n.name }}</span>
           <span> {{ n.release }}</span>
         </div>
@@ -63,6 +63,11 @@ export default {
 </script>
 
 <style scoped>
+.res-img {
+  max-width: auto;
+  height: 100px;
+  margin-right: 0.5rem;
+}
 .name {
   flex: 70%;
   margin-right: 5px;
