@@ -42,8 +42,8 @@
         {{ data.genre }}
       </p>
 
-      <div>
-        <span class="title">
+      <div class="epic">
+        <span class="title ept">
           Episodes
         </span>
         <br />
@@ -113,8 +113,21 @@ export default {
 </script>
 
 <style scoped>
+.ept {
+  margin-bottom: 1rem;
+}
+.epic {
+  /* overflow: hidden; */
+  height: 140px;
+}
 .epi {
   display: inline;
+  background: #d79943;
+  color: black;
+  margin: 9px 5px;
+  padding: 3px 6px;
+  font-size: 1rem;
+  font-weight: 600;
 }
 img {
   position: fixed;
