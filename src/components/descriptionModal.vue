@@ -1,8 +1,10 @@
 <template>
   <transition name="slide" appear>
-    <div class="bg" v-if="modal" @click="$emit('close')">
+    <div class="bg" v-if="modal" @click="close($event)">
       <div class="card">
-        <div></div>
+        <a v-for="(ep, index) in 10" :key="index" :link="ep.link" target="_blank">
+          Download (360P - mp4)
+        </a>
       </div>
     </div>
   </transition>
@@ -22,12 +24,25 @@ export default {
       this.getDetails();
     },
   },
+  methods: {
+    close(e) {
+      console.log(e);
+    },
+  },
 };
 </script>
 
 <style scoped>
+a {
+  background: black;
+  margin: 3px;
+  color: goldenrod;
+  padding: 4px;
+}
 .bg {
-  position: fixed;
+  position: absolute;
+  top: 0;
+  left: 0;
   background-color: rgba(35, 31, 31, 0.893);
   min-width: 100vw;
   min-height: 100%;
@@ -40,7 +55,10 @@ export default {
   width: 100px;
 }
 .card {
-  min-width: 310px;
+  padding: 1rem;
+  background: white;
+  min-width: 600px;
+  max-width: 95vw;
   display: flex;
   justify-content: center;
   align-items: center;
