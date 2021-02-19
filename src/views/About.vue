@@ -54,7 +54,9 @@ export default {
       disableDecre: false,
     };
   },
-  computed: {},
+  computed: {
+    link() {},
+  },
 
   methods: {},
   created() {
