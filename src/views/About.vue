@@ -1,25 +1,17 @@
 <template>
-  <div class="container" v-if="name">
+  <div class="container" v-if="data.name">
     <div class="details">
-      <h1>{{ name }}</h1>
-      <p class="text">
-        {{ details }}
+      <h2>{{ data.name }}</h2>
+      <p>
+        <span class="title">
+          summary
+        </span>
+        <br />
+        {{ data.summary }}
       </p>
-      <h2>&#8358;{{ Price }}</h2>
-
-      <!-- <div class="size">
-        <p class="sItem">XS</p>
-        <p class="sItem">S</p>
-        <p class="sItem">M</p>
-        <p class="sItem">L</p>
-        <p class="sItem">XL</p>
-      </div> -->
-      <div class="flex unitBtn">
-        <button class="secondaryBtn secBtn" :disabled="disableDecre" @click="decre">-</button>
-        <div class="cartbtn priBtn">{{ count }}</div>
-        <button class="secondaryBtn secBtn" @click="incre">+</button>
-      </div>
-      <button class="primaryBtn cartbtn" @click="cart(complete)">ADD TO CART</button>
+      <p>Other Names:- {{ data.otherNames }}</p>
+      <p>Release:- {{ data.release }}</p>
+      <p>Release:- {{ data.release }}</p>
     </div>
 
     <div class="detImg">
@@ -41,7 +33,9 @@ export default {
   components: { Loader },
   name: "Details",
   data() {
-    return {};
+    return {
+      data: "",
+    };
   },
   computed: {
     desc() {
@@ -52,6 +46,7 @@ export default {
   methods: {
     getDetails() {
       this.data = {};
+      console.log(`https://anime-web-scraper.herokuapp.com/desc/?link=${this.desc.link}`);
       fetch(`https://anime-web-scraper.herokuapp.com/desc/?link=${this.desc.link}`)
         .then((response) => response.json())
         .then((data) => {
@@ -71,6 +66,8 @@ export default {
     console.log(this.desc);
     if (this.desc == null) {
       this.$router.push("/");
+    } else {
+      this.getDetails();
     }
   },
 };
@@ -152,7 +149,7 @@ a {
   margin-top: 2rem;
 }
 h2 {
-  margin-top: 0.8rem;
+  margin-top: 5rem;
   font-size: 2.5rem;
   text-shadow: 0px 1px 4px rgba(0, 0, 0, 0.315), 0px 4px 2px rgba(0, 0, 0, 0.541);
 }
