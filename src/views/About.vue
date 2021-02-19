@@ -58,16 +58,16 @@
       </div>
 
       <!-- EPISODES -->
-      <div v-if="show">
-        <Loader v-if="Eload && !Episodes.length" />
+      <div v-if="show" class="epicES">
+        <Loader v-if="!Episodes.length" />
         <div
           v-else
-          class="epi"
+          class="epiES"
           v-for="(ep, index) in Episodes"
           :key="index"
           @click="getEpis(data.id, ep.start, ep.end, data.name)"
         >
-          {{ ep.start }} - {{ ep.end }}
+          {{ ep.name }}
         </div>
       </div>
     </div>
@@ -94,7 +94,8 @@ export default {
     return {
       data: "",
       Episodes: [],
-      Eload: true,
+      // Eload: true,
+      show: false,
     };
   },
   computed: {
@@ -105,6 +106,9 @@ export default {
 
   methods: {
     getEpis(id, start, end, name) {
+      this.Episodes = [];
+      this.show = true;
+
       // https://anime-web-scraper.herokuapp.com/episodes/?start=0&end=99&id=1089&name=naruto
       console.log(
         `https://anime-web-scraper.herokuapp.com/episodes/?start=${start}&end=${end}&id=${id}&name=${name}`,
@@ -116,12 +120,12 @@ export default {
         .then((data) => {
           console.log("data");
           console.log(data);
-          // this.data = data;
-          this.loading = false;
+          this.Episodes = data;
+          // this.Eload = false;
         })
         .catch((err) => {
           console.log(err);
-          this.loading = false;
+          // this.Eload = false;
           this.Error = true;
         });
     },
@@ -158,9 +162,25 @@ export default {
 .ept {
   margin-bottom: 1rem;
 }
+.epicES {
+  min-height: 140px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
 .epic {
   /* overflow: hidden; */
-  height: 140px;
+  min-height: 140px;
+}
+.epiES {
+  cursor: pointer;
+  display: inline;
+  color: #d79943;
+  background: black;
+  margin: 9px 5px;
+  padding: 3px 6px;
+  font-size: 1rem;
+  font-weight: 600;
 }
 .epi {
   cursor: pointer;
