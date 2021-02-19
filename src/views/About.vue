@@ -1,5 +1,6 @@
 <template>
   <div class="container" v-if="data.name">
+    <DescriptionModal :showModal="showModal" :link="link" @close="showModal = false" />
     <div class="details">
       <h2>{{ data.name }}</h2>
       <p>
@@ -65,7 +66,7 @@
           class="epiES"
           v-for="(ep, index) in Episodes"
           :key="index"
-          @click="getEpis(data.id, ep.start, ep.end, data.name)"
+          @click="getLinks(ep.link)"
         >
           {{ ep.name }}
         </div>
@@ -82,8 +83,6 @@
       <Loader w="233.39" h="340" b="8" />
       <p class="lood">loading....</p>
     </div>
-
-    <DescriptionModal :showModal="showModal" :link="link" @close="showModal = false" />
   </div>
 </template>
 
@@ -97,7 +96,8 @@ export default {
     return {
       data: "",
       Episodes: [],
-      // Eload: true,
+      showModal: false,
+      link: "",
       show: false,
     };
   },
@@ -108,6 +108,11 @@ export default {
   },
 
   methods: {
+    getLinks(link) {
+      this.link = link;
+      this.showModal = true;
+      console.log("object");
+    },
     getEpis(id, start, end, name) {
       this.Episodes = [];
       this.show = true;
@@ -176,6 +181,8 @@ export default {
   min-height: 140px;
 }
 .epiES {
+  height: fit-content;
+
   cursor: pointer;
   display: inline;
   color: #d79943;
