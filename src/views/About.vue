@@ -56,6 +56,20 @@
           {{ ep.start }} - {{ ep.end }}
         </div>
       </div>
+
+      <!-- EPISODES -->
+      <div v-if="show">
+        <Loader v-if="Eload && !Episodes.length" />
+        <div
+          v-else
+          class="epi"
+          v-for="(ep, index) in Episodes"
+          :key="index"
+          @click="getEpis(data.id, ep.start, ep.end, data.name)"
+        >
+          {{ ep.start }} - {{ ep.end }}
+        </div>
+      </div>
     </div>
 
     <div class="detImg">
@@ -79,6 +93,8 @@ export default {
   data() {
     return {
       data: "",
+      Episodes: [],
+      Eload: true,
     };
   },
   computed: {
@@ -93,19 +109,21 @@ export default {
       console.log(
         `https://anime-web-scraper.herokuapp.com/episodes/?start=${start}&end=${end}&id=${id}&name=${name}`,
       );
-      // fetch(`https://anime-web-scraper.herokuapp.com/desc/?link=${this.desc.link}`)
-      //   .then((response) => response.json())
-      //   .then((data) => {
-      //     console.log(data);
-      //     console.log(data.vidOne);
-      //     this.data = data;
-      //     this.loading = false;
-      //   })
-      //   .catch((err) => {
-      //     console.log(err);
-      //     this.loading = false;
-      //     this.Error = true;
-      //   });
+      fetch(
+        `https://anime-web-scraper.herokuapp.com/episodes/?start=${start}&end=${end}&id=${id}&name=${name}`,
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("data");
+          console.log(data);
+          // this.data = data;
+          this.loading = false;
+        })
+        .catch((err) => {
+          console.log(err);
+          this.loading = false;
+          this.Error = true;
+        });
     },
     getDetails() {
       this.data = {};
