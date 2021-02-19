@@ -82,13 +82,16 @@
       <Loader w="233.39" h="340" b="8" />
       <p class="lood">loading....</p>
     </div>
+
+    <DescriptionModal :showModal="showModal" :link="link" @close="showModal = false" />
   </div>
 </template>
 
 <script>
+import DescriptionModal from "@/components/descriptionModal.vue";
 import Loader from "@/components/Loader.vue";
 export default {
-  components: { Loader },
+  components: { DescriptionModal, Loader },
   name: "Details",
   data() {
     return {

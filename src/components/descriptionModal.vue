@@ -1,9 +1,12 @@
 <template>
   <transition name="slide" appear>
     <div class="bg" v-if="modal" @click="close($event)">
-      <div class="card">
-        <a v-for="(ep, index) in 4" :key="index" :href="ep.link" target="_blank">
-          Download (360P - mp4)
+      <div v-if="!options.length">
+        <Loader />
+      </div>
+      <div class="card" v-else>
+        <a v-for="(ep, index) in options" :key="index" :href="ep.link" target="_blank">
+          {{ ep.name }}
         </a>
       </div>
     </div>
@@ -11,9 +14,16 @@
 </template>
 
 <script>
+import Loader from "@/components/Loader.vue";
 export default {
+  components: { Loader },
   name: "success",
-  props: ["showModal"],
+  props: ["showModal", "link"],
+  data() {
+    return {
+      options: [],
+    };
+  },
   computed: {
     modal() {
       return this.showModal;
@@ -26,14 +36,12 @@ export default {
   },
   methods: {
     getDetails() {
-      fetch(
-        `https://anime-web-scraper.herokuapp.com/episodes/?start=${start}&end=${end}&id=${id}&name=${name}`,
-      )
+      fetch(`https://anime-web-scraper.herokuapp.com/downloadLink/?link=${this.link}`)
         .then((response) => response.json())
         .then((data) => {
           console.log("data");
           console.log(data);
-          this.Episodes = data;
+          this.options = data;
           // this.Eload = false;
         })
         .catch((err) => {

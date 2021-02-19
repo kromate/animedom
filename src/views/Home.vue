@@ -20,15 +20,13 @@
         </div>
       </div>
     </div>
-    <DescriptionModal :showModal="showModal" :link="link" @close="showModal = false" />
   </div>
 </template>
 
 <script>
-import DescriptionModal from "@/components/descriptionModal.vue";
 import Loader from "@/components/Loader.vue";
 export default {
-  components: { DescriptionModal, Loader },
+  components: { Loader },
   name: "Home",
   data() {
     return {
