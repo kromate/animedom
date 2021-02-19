@@ -28,16 +28,10 @@
   </div>
 
   <div class="container2" v-else>
-    <div v-if="!empty">
+    <div>
       <Loader w="233.39" h="340" b="8" />
       <p class="lood">loading....</p>
     </div>
-
-    <p class="empty" v-else>
-      Item not Found <br />
-      click <router-link class="box" to="/home" style="margin: 1rem;">Here </router-link> to return
-      to home page
-    </p>
   </div>
 </template>
 
@@ -47,20 +41,19 @@ export default {
   components: { Loader },
   name: "Details",
   data() {
-    return {
-      empty: false,
-      count: 1,
-      item: "",
-      disableDecre: false,
-    };
+    return {};
   },
   computed: {
-    link() {},
+    link() {
+      return this.$store.state.desc;
+    },
   },
 
   methods: {},
   created() {
-    this.search();
+    if (this.link == "") {
+      this.$router.push("/");
+    }
   },
 };
 </script>

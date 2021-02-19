@@ -41,6 +41,8 @@ export default {
 
   methods: {
     direct(link) {
+      this.$store.commit("updateDesc", link);
+      this.$router.push("about");
       this.link = link;
       this.showModal = true;
     },
