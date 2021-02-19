@@ -9,9 +9,40 @@
         <br />
         {{ data.summary }}
       </p>
-      <p>Other Names:- {{ data.otherNames }}</p>
-      <p>Release:- {{ data.release }}</p>
-      <p>Release:- {{ data.release }}</p>
+
+      <p>
+        <span class="title">
+          Other Names
+        </span>
+        <br />
+        {{ data.otherNames }}
+      </p>
+
+      <p>
+        <span class="title">
+          Release
+        </span>
+        <br />
+        {{ data.release }}
+      </p>
+
+      <p>
+        <span class="title">
+          Type
+        </span>
+        <br />
+        {{ data.type }}
+      </p>
+
+      <p>
+        <span class="title">
+          Genre
+        </span>
+        <br />
+        {{ data.genre }}
+      </p>
+
+      <div class="epi"></div>
     </div>
 
     <div class="detImg">
@@ -74,6 +105,11 @@ export default {
 </script>
 
 <style scoped>
+img {
+  position: fixed;
+  top: 49px;
+  right: 54px;
+}
 .title {
   font-weight: 700;
   font-size: 1.4rem;
@@ -177,17 +213,20 @@ h1 {
   margin-top: 1.5rem;
 }
 .details {
-  flex-basis: 45%;
+  flex-basis: 60%;
   margin: 12px;
   margin-left: 40px;
   max-width: 400px;
 }
 .detImg {
-  flex-basis: 55%;
+  flex-basis: 40%;
   display: flex;
   align-items: flex-end;
 }
 @media (max-width: 800px) {
+  img {
+    position: static;
+  }
   .detImg {
     order: 1;
     flex-direction: column;
