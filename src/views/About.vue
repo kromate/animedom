@@ -47,7 +47,12 @@
           Episodes
         </span>
         <br />
-        <div class="epi" v-for="(ep, index) in data.episodes" :key="index">
+        <div
+          class="epi"
+          v-for="(ep, index) in data.episodes"
+          :key="index"
+          @click="getEpis(data.id, ep.start, ep.end, data.name)"
+        >
           {{ ep.start }} - {{ ep.end }}
         </div>
       </div>
@@ -83,8 +88,24 @@ export default {
   },
 
   methods: {
-    getEpis(){
+    getEpis(id, start, end, name) {
       // https://anime-web-scraper.herokuapp.com/episodes/?start=0&end=99&id=1089&name=naruto
+      console.log(
+        `https://anime-web-scraper.herokuapp.com/episodes/?start=${start}&end=${end}&id=${id}&name=${name}`,
+      );
+      // fetch(`https://anime-web-scraper.herokuapp.com/desc/?link=${this.desc.link}`)
+      //   .then((response) => response.json())
+      //   .then((data) => {
+      //     console.log(data);
+      //     console.log(data.vidOne);
+      //     this.data = data;
+      //     this.loading = false;
+      //   })
+      //   .catch((err) => {
+      //     console.log(err);
+      //     this.loading = false;
+      //     this.Error = true;
+      //   });
     },
     getDetails() {
       this.data = {};
