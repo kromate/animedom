@@ -42,7 +42,15 @@
         {{ data.genre }}
       </p>
 
-      <div class="epi"></div>
+      <div>
+        <span class="title">
+          Episodes
+        </span>
+        <br />
+        <div class="epi" v-for="(ep, index) in data.episodes" :key="index">
+          {{ ep.start }} - {{ ep.end }}
+        </div>
+      </div>
     </div>
 
     <div class="detImg">
@@ -105,6 +113,9 @@ export default {
 </script>
 
 <style scoped>
+.epi {
+  display: inline;
+}
 img {
   position: fixed;
   top: 49px;
