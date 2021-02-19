@@ -6,7 +6,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     searchArray:[],
-    desc:''
+    desc:null
   },
   mutations: {
     addsearchedRes(state, data){

@@ -23,7 +23,7 @@
     </div>
 
     <div class="detImg">
-      <!-- <img :src="" alt=""> -->
+      <img :src="desc.image" alt="" />
     </div>
   </div>
 
@@ -44,7 +44,7 @@ export default {
     return {};
   },
   computed: {
-    link() {
+    desc() {
       return this.$store.state.desc;
     },
   },
@@ -52,7 +52,7 @@ export default {
   methods: {
     getDetails() {
       this.data = {};
-      fetch(`https://anime-web-scraper.herokuapp.com/desc/?link=${this.link}`)
+      fetch(`https://anime-web-scraper.herokuapp.com/desc/?link=${this.desc.link}`)
         .then((response) => response.json())
         .then((data) => {
           console.log(data);
@@ -68,7 +68,8 @@ export default {
     },
   },
   created() {
-    if (this.link == "") {
+    console.log(this.desc);
+    if (this.desc == null) {
       this.$router.push("/");
     }
   },

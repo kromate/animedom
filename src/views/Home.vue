@@ -8,7 +8,12 @@
     <div>
       <Loader v-if="loading" />
       <div v-else-if="searchResult.length">
-        <div class="card " v-for="(n, index) in searchResult" :key="index" @click="direct(n.link)">
+        <div
+          class="card "
+          v-for="(n, index) in searchResult"
+          :key="index"
+          @click="direct(n.link, n.image)"
+        >
           <img :src="n.image" class="res-img" />
           <span class="name">{{ n.name }}</span>
           <span> {{ n.release }}</span>
@@ -40,8 +45,8 @@ export default {
   },
 
   methods: {
-    direct(link) {
-      this.$store.commit("updateDesc", {link:link,image:image);
+    direct(link, image) {
+      this.$store.commit("updateDesc", { link: link, image: image });
       this.$router.push("about");
       this.link = link;
       this.showModal = true;
