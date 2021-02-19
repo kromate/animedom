@@ -23,7 +23,7 @@
     </div>
 
     <div class="detImg">
-      <CardImg />
+      <!-- <img :src="" alt=""> -->
     </div>
   </div>
 
@@ -49,7 +49,24 @@ export default {
     },
   },
 
-  methods: {},
+  methods: {
+    getDetails() {
+      this.data = {};
+      fetch(`https://anime-web-scraper.herokuapp.com/desc/?link=${this.link}`)
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+          console.log(data.vidOne);
+          this.data = data;
+          this.loading = false;
+        })
+        .catch((err) => {
+          console.log(err);
+          this.loading = false;
+          this.Error = true;
+        });
+    },
+  },
   created() {
     if (this.link == "") {
       this.$router.push("/");
