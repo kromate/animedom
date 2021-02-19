@@ -83,6 +83,9 @@ export default {
   },
 
   methods: {
+    getEpis(){
+      // https://anime-web-scraper.herokuapp.com/episodes/?start=0&end=99&id=1089&name=naruto
+    },
     getDetails() {
       this.data = {};
       console.log(`https://anime-web-scraper.herokuapp.com/desc/?link=${this.desc.link}`);
@@ -121,6 +124,7 @@ export default {
   height: 140px;
 }
 .epi {
+  cursor: pointer;
   display: inline;
   background: #d79943;
   color: black;
