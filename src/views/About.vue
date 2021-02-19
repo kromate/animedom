@@ -74,6 +74,11 @@ export default {
 </script>
 
 <style scoped>
+.title {
+  font-weight: 700;
+  font-size: 1.4rem;
+  text-decoration: underline;
+}
 .priBtn {
   margin: 0px 6px;
   height: 40px;
