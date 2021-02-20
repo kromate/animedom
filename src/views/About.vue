@@ -74,7 +74,7 @@
     </div>
 
     <div class="detImg">
-      <img :src="desc.image" alt="" />
+      <img :src="$route.query.image" alt="" />
     </div>
   </div>
 
@@ -109,7 +109,8 @@ export default {
 
   methods: {
     getLinks(link) {
-      this.link = link;
+      let uplink = encodeURIComponent(link.trim());
+      this.link = uplink;
       this.showModal = true;
       console.log("object");
     },
@@ -139,8 +140,8 @@ export default {
     },
     getDetails() {
       this.data = {};
-      console.log(`https://anime-web-scraper.herokuapp.com/desc/?link=${this.desc.link}`);
-      fetch(`https://anime-web-scraper.herokuapp.com/desc/?link=${this.desc.link}`)
+      console.log(`https://anime-web-scraper.herokuapp.com/desc/?link=${this.$route.query.link}`);
+      fetch(`https://anime-web-scraper.herokuapp.com/desc/?link=${this.$route.query.link}`)
         .then((response) => response.json())
         .then((data) => {
           console.log(data);
@@ -157,7 +158,7 @@ export default {
   },
   created() {
     console.log(this.desc);
-    if (this.desc == null) {
+    if (this.desc == null && this.$route.query.link == undefined) {
       this.$router.push("/");
     } else {
       this.getDetails();

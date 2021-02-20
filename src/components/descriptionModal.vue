@@ -68,7 +68,7 @@ a {
   padding: 4px;
 }
 .bg {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   background-color: rgba(35, 31, 31, 0.893);

@@ -44,10 +44,15 @@ export default {
 
   methods: {
     direct(link, image) {
-      this.$store.commit("updateDesc", { link: link, image: image });
-      this.$router.push("about");
-      this.link = link;
-      this.showModal = true;
+      // this.$store.commit("updateDesc", { link: link, image: image });
+      // this.$router.push("about");
+      // this.link = link;
+      // this.showModal = true;
+
+      this.$router.push({
+        name: "About",
+        query: { link: link, image: image },
+      });
     },
     search() {
       this.loading = true;
