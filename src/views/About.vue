@@ -1,6 +1,10 @@
 <template>
   <div class="container" v-if="data.name">
-    <DescriptionModal :showModal="showModal" :link="link" @close="showModal = false" />
+    <DescriptionModal
+      :showModal="showModal"
+      :link="link"
+      @close="showModal = false"
+    />
     <div class="details">
       <h2>{{ data.name }}</h2>
       <p>
@@ -98,13 +102,13 @@ export default {
       Episodes: [],
       showModal: false,
       link: "",
-      show: false,
+      show: false
     };
   },
   computed: {
     desc() {
       return this.$store.state.desc;
-    },
+    }
   },
 
   methods: {
@@ -120,19 +124,19 @@ export default {
 
       // https://anime-web-scraper.herokuapp.com/episodes/?start=0&end=99&id=1089&name=naruto
       console.log(
-        `https://anime-web-scraper.herokuapp.com/episodes/?start=${start}&end=${end}&id=${id}&name=${name}`,
+        `https://anime-web-scraper.herokuapp.com/episodes/?start=${start}&end=${end}&id=${id}&name=${name}`
       );
       fetch(
-        `https://anime-web-scraper.herokuapp.com/episodes/?start=${start}&end=${end}&id=${id}&name=${name}`,
+        `https://anime-web-scraper.herokuapp.com/episodes/?start=${start}&end=${end}&id=${id}&name=${name}`
       )
-        .then((response) => response.json())
-        .then((data) => {
+        .then(response => response.json())
+        .then(data => {
           console.log("data");
           console.log(data);
           this.Episodes = data;
           // this.Eload = false;
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
           // this.Eload = false;
           this.Error = true;
@@ -140,21 +144,25 @@ export default {
     },
     getDetails() {
       this.data = {};
-      console.log(`https://anime-web-scraper.herokuapp.com/desc/?link=${this.$route.query.link}`);
-      fetch(`https://anime-web-scraper.herokuapp.com/desc/?link=${this.$route.query.link}`)
-        .then((response) => response.json())
-        .then((data) => {
+      console.log(
+        `https://anime-web-scraper.herokuapp.com/desc/?link=${this.$route.query.link}`
+      );
+      fetch(
+        `https://anime-web-scraper.herokuapp.com/desc/?link=${this.$route.query.link}`
+      )
+        .then(response => response.json())
+        .then(data => {
           console.log(data);
           console.log(data.vidOne);
           this.data = data;
           this.loading = false;
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
           this.loading = false;
           this.Error = true;
         });
-    },
+    }
   },
   created() {
     console.log(this.desc);
@@ -163,7 +171,7 @@ export default {
     } else {
       this.getDetails();
     }
-  },
+  }
 };
 </script>
 
@@ -250,7 +258,8 @@ a {
 .empty {
   font-size: 2rem;
   text-align: center;
-  text-shadow: 0px 1px 4px rgba(0, 0, 0, 0.315), 0px 4px 2px rgba(0, 0, 0, 0.541);
+  text-shadow: 0px 1px 4px rgba(0, 0, 0, 0.315),
+    0px 4px 2px rgba(0, 0, 0, 0.541);
   font-weight: 900;
   text-decoration: none;
   width: 260px;
@@ -265,7 +274,8 @@ a {
 }
 .text {
   margin-left: 1rem;
-  text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.315), 0px 2px 1px rgba(0, 0, 0, 0.541);
+  text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.315),
+    0px 2px 1px rgba(0, 0, 0, 0.541);
   font-size: 1.3rem;
 }
 .cartbtn {
@@ -290,10 +300,12 @@ a {
 h2 {
   margin-top: 5rem;
   font-size: 2.5rem;
-  text-shadow: 0px 1px 4px rgba(0, 0, 0, 0.315), 0px 4px 2px rgba(0, 0, 0, 0.541);
+  text-shadow: 0px 1px 4px rgba(0, 0, 0, 0.315),
+    0px 4px 2px rgba(0, 0, 0, 0.541);
 }
 h1 {
-  text-shadow: 0px 1px 4px rgba(0, 0, 0, 0.315), 0px 4px 2px rgba(0, 0, 0, 0.541);
+  text-shadow: 0px 1px 4px rgba(0, 0, 0, 0.315),
+    0px 4px 2px rgba(0, 0, 0, 0.541);
   font-size: 4rem;
   margin-left: 1rem;
   margin-top: 6rem;

@@ -5,15 +5,15 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    searchArray:[],
-    desc:null
+    searchArray: [],
+    desc: null
   },
   mutations: {
-    addsearchedRes(state, data){
-      state.searchArray = data
+    addsearchedRes(state, data) {
+      state.searchArray = data;
     },
-    updateDesc(state, data){
-      state.desc = data
+    updateDesc(state, data) {
+      state.desc = data;
     }
   },
   actions: {},

@@ -1,7 +1,12 @@
 <template>
   <div class="is-flex conf">
     <div class="is-flex w-50">
-      <input class="input" type="text" placeholder="Name of the Anime" v-model="searchValue" />
+      <input
+        class="input"
+        type="text"
+        placeholder="Name of the Anime"
+        v-model="searchValue"
+      />
       <button class="button" @click="search">Search</button>
     </div>
 
@@ -33,13 +38,13 @@ export default {
       link: "",
       showModal: true,
       loading: false,
-      searchValue: "",
+      searchValue: ""
     };
   },
   computed: {
     searchResult() {
       return this.$store.state.searchArray;
-    },
+    }
   },
 
   methods: {
@@ -51,7 +56,7 @@ export default {
 
       this.$router.push({
         name: "About",
-        query: { link: link, image: image },
+        query: { link: link, image: image }
       });
     },
     search() {
@@ -59,19 +64,19 @@ export default {
       let value = encodeURIComponent(this.searchValue);
       // https://anime-web-scraper.herokuapp.com/search/?name=haikyu
       fetch(`https://anime-web-scraper.herokuapp.com/search/?name=${value}`)
-        .then((response) => response.json())
-        .then((data) => {
+        .then(response => response.json())
+        .then(data => {
           console.log(data);
           this.$store.commit("addsearchedRes", data);
           this.loading = false;
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
           alert("something went wrong");
           this.loading = false;
         });
-    },
-  },
+    }
+  }
 };
 </script>
 
