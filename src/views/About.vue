@@ -172,6 +172,7 @@ export default {
 <style scoped>
 .blc {
   display: block;
+  min-height: 100px;
 }
 .ept {
   margin-bottom: 1rem;
