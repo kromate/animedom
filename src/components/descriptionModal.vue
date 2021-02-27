@@ -5,12 +5,7 @@
         <Loader />
       </div>
       <div class="card" v-else>
-        <a
-          v-for="(ep, index) in options"
-          :key="index"
-          :href="ep.link"
-          target="_blank"
-        >
+        <a v-for="(ep, index) in options" :key="index" :href="ep.link" target="_blank">
           {{ ep.name }}
         </a>
       </div>
@@ -26,35 +21,31 @@ export default {
   props: ["showModal", "link"],
   data() {
     return {
-      options: []
+      options: [],
     };
   },
   computed: {
     modal() {
       return this.showModal;
-    }
+    },
   },
   watch: {
     modal() {
       this.getDetails();
-    }
+    },
   },
   methods: {
     getDetails() {
-      console.log(
-        `https://anime-web-scraper.herokuapp.com/downloadLink/?link=${this.link}`
-      );
-      fetch(
-        `https://anime-web-scraper.herokuapp.com/downloadLink/?link=${this.link}`
-      )
-        .then(response => response.json())
-        .then(data => {
+      console.log(`https://anime-web-scraper.herokuapp.com/downloadLink/?link=${this.link}`);
+      fetch(`https://anime-web-scraper.herokuapp.com/downloadLink/?link=${this.link}`)
+        .then((response) => response.json())
+        .then((data) => {
           console.log("data");
           console.log(data);
           this.options = data;
           // this.Eload = false;
         })
-        .catch(err => {
+        .catch((err) => {
           console.log(err);
           // this.Eload = false;
           this.Error = true;
@@ -63,9 +54,10 @@ export default {
     close(e) {
       if (e.target.className == "bg") {
         this.$emit("close");
+        this.options = [];
       }
-    }
-  }
+    },
+  },
 };
 </script>
 
