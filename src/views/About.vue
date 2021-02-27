@@ -48,13 +48,15 @@
           Episodes
         </span>
         <br />
-        <div
-          class="epi"
-          v-for="(ep, index) in data.episodes"
-          :key="index"
-          @click="getEpis(data.id, ep.start, ep.end, data.name)"
-        >
-          {{ ep.start }} - {{ ep.end }}
+        <div class="blc">
+          <div
+            class="epi"
+            v-for="(ep, index) in data.episodes"
+            :key="index"
+            @click="getEpis(data.id, ep.start, ep.end, data.name)"
+          >
+            {{ ep.start }} - {{ ep.end }}
+          </div>
         </div>
       </div>
 
@@ -197,6 +199,7 @@ export default {
   font-weight: 600;
 }
 .epi {
+  height: fit-content;
   cursor: pointer;
   display: inline;
   background: #d79943;
