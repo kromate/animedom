@@ -170,6 +170,9 @@ export default {
 </script>
 
 <style scoped>
+.blc {
+  display: block;
+}
 .ept {
   margin-bottom: 1rem;
 }
@@ -181,6 +184,7 @@ export default {
 }
 .epic {
   /* overflow: hidden; */
+  flex-direction: column;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
